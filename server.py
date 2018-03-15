@@ -4,6 +4,7 @@ import socket
 def read_code():
     data = ''
     all_data = ''
+    conn.send('ДЛЯ ЗАВЕРШЕНИЯ\r\nНАЖМИТЕ ESC\r\nСканируйте номера:\r\n'.encode('cp1251'))
     while data != b'\x1b':
         data = conn.recv(50)
         all_data = all_data + data.decode()
@@ -20,9 +21,13 @@ def save_base(number):
 
 
 if __name__ == '__main__':
-    sock = socket.socket()
-    sock.bind(("", 14900))
-    sock.listen(10)
-    conn, addr = sock.accept()
-    conn.send('ДЛЯ ЗАВЕРШЕНИЯ\r\nНАЖМИТЕ ESC\r\nСканируйте номера:\r\n'.encode('cp1251'))
-    read_code()
+    while True:
+        print('Server started')
+        try:
+            sock = socket.socket()
+            sock.bind(("", 14900))
+            sock.listen(10)
+            conn, addr = sock.accept()
+            read_code()
+        except:
+            print('Error')
