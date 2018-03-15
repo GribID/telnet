@@ -1,1 +1,1 @@
-# telnet
+# telnet for pradius
